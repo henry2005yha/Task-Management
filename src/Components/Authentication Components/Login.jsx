@@ -9,7 +9,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.get('localhost:8080/taskmanagement/user/test');
+            const response = await axios.post('http://localhost:8080/taskmanagement/user/login', {email, password});
             console.log(response.data);
         } catch (error) {
             console.error('Login Error! Try Again', error);
