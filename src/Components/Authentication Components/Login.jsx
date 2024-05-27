@@ -10,9 +10,12 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8080/taskmanagement/user/login', {email, password});
+            console.log("success");
             console.log(response.data);
+            
         } catch (error) {
             console.error('Login Error! Try Again', error);
+            
         }
     };
   return (
