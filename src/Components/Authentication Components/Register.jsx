@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import './register.css'
-
+import axiosInstance from '../AxiosHelper';
 const Register = () => {
     
     const [userName, setUsername] = useState('');
@@ -11,8 +11,9 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/taskmanagement/user/register', {userName, email, password});
-            console.log(response.data);
+          const response = await axiosInstance.post('/user/register', { userName, email, password });
+          localStorage.setItem('email', response.data.email);
+          window.location.href = '/dashboard';
         } catch (error) {
             console.error('Registartion Error, Try Agsin!', error);
         }
