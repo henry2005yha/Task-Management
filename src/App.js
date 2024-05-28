@@ -7,9 +7,9 @@ import TaskForm from './Components/Task Managment Components/TaskForm';
 function App() {
   return (
     <div className="App">
-     <Login/>
+     {/* <Login/> */}
      <Register/>
-     <TaskForm/>
+     {/* <TaskForm/> */}
     </div>
   );
 }

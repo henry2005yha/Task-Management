@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react'
+import './taskform.css';
 
 const TaskForm = ({task, onSave}) => {
     const [title, setTiltle] = useState(task ? task.title : '');
@@ -32,12 +33,12 @@ const TaskForm = ({task, onSave}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const taskData = {title, description, status, deadline, category};
+        const taskData = {title, description, status, deadline};
         try {
             if(task){
                 await axios.put(``, taskData);
             }else{
-                await axios.post('', taskData);
+                await axios.post(`http://localhost:8080/taskmanagement/task/create?category=${category}`, taskData);
             }
             onSave();
         } catch (error) {
@@ -45,12 +46,13 @@ const TaskForm = ({task, onSave}) => {
         }
     };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={title} onChange={(e) => setTiltle(e.target.value)} placeholder="Enter Title" required/>
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Enter Description" required></textarea>
-        <input type="datetime-local" value={deadline} onChange={(e) => setDeadline(e.target.value)} required/>
-        <select value={category} onChange={(e) => setCategory(e.target.value)} required>
+    <div className='task-form-container'>
+      <form onSubmit={handleSubmit} className="task-form">
+      <h2>Create Tasks</h2>
+        <input type="text" value={title} onChange={(e) => setTiltle(e.target.value)} placeholder="Enter Title" required className="task-input"/>
+        <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Enter Description" required className="task-textarea"></textarea>
+        <input type="datetime-local" value={deadline} onChange={(e) => setDeadline(e.target.value)} required className="task-input"/>
+        <select value={category} onChange={(e) => setCategory(e.target.value)} required className="task-select">
                     <option value="">Select Category</option>
                     {categories.map((cat) => (
                         <option key={cat.id} value={cat.id}>
@@ -58,7 +60,7 @@ const TaskForm = ({task, onSave}) => {
                         </option>
                     ))}
                 </select>
-        <button type="submit">Save Task</button>
+        <button type="submit" className='task-button'>Save Task</button>
       </form>
     </div>
   )
