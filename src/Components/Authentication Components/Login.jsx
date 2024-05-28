@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post('/user/login', { email, password });
-     
+      
       localStorage.setItem('email', response.data.email);
       console.log('Login successful');
       window.location.href = '/dashboard';
