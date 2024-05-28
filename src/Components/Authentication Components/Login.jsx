@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import axios from 'axios';
 import './login.css';
-import axiosInstance from '../AxiosHelper';
+import axiosInstance from '../../Components/AxiosHelper';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,8 +13,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post('/user/login', { email, password });
-      const { email } = response.data;
-      localStorage.setItem('email', email);
+     
+      localStorage.setItem('email', response.data.email);
       console.log('Login successful');
       window.location.href = '/dashboard';
     } catch (error) {
