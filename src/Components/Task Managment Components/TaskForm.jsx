@@ -15,12 +15,14 @@ const TaskForm = ({ task, onSave }) => {
     const fetchCategories = async () => {
         try {
             const response = await axiosInstance.get('/task/getCategories');
-            const categoryData = response.data;
-
-            if (Array.isArray(categoryData)) {
+            const responseData = response.data;
+           
+            if (Array.isArray(responseData)) {
+                const categoryData = response.data.categories;
+                console.log(categoryData);
                 setCategories(categoryData);
             } else {
-                console.error('API is not responding correctly', categoryData);
+                console.error('API is not responding correctly', responseData);
             }
         } catch (error) {
             console.error('Category Error', error);
