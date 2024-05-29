@@ -3,6 +3,7 @@ import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react'
 import './taskform.css';
+import axiosInstance from '../AxiosHelper';
 
 const TaskForm = ({task, onSave}) => {
     const [title, setTiltle] = useState(task ? task.title : '');
@@ -15,7 +16,7 @@ const TaskForm = ({task, onSave}) => {
     useEffect(() => {
         const fetchCategories = async () =>{
             try {
-                const response = await axios.get('http://localhost:8080/taskmanagement/task/getCategories');
+                const response = await axiosInstance.get('http://localhost:8080/taskmanagement/task/getCategories');
                 const categoryData = response.data;
                
                 if(Array.isArray(categoryData)){
@@ -38,7 +39,7 @@ const TaskForm = ({task, onSave}) => {
             if(task){
                 await axios.put(``, taskData);
             }else{
-                await axios.post(`http://localhost:8080/taskmanagement/task/create?category=${category}`, taskData);
+                await axiosInstance.post(`/task/create?category=${category}`, taskData);
             }
             onSave();
         } catch (error) {

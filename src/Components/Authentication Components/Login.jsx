@@ -1,19 +1,23 @@
 import React from 'react'
 import { useState } from 'react'
-import axios from 'axios';
+
 import './login.css';
 import axiosInstance from '../../Components/AxiosHelper';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userMail, setUserMail] = useState('');
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post('/user/login', { email, password });
       
+      const response = await axiosInstance.post('/user/login', { email, password });
+<<<<<<< HEAD
+      
+=======
+>>>>>>> 4169e60fcff382e51dd986cae94c52d4cb0d8223
       localStorage.setItem('email', response.data.email);
       console.log('Login successful');
       window.location.href = '/dashboard';

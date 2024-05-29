@@ -33,4 +33,4 @@ axiosInstance.interceptors.response.use(
     }
 );
 
-export default AxiosHelper;
+export default axiosInstance;
