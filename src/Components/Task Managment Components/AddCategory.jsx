@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import axiosInstance from '../AxiosHelper';
 
 const AddCategory = () => {
     const [addCategory, setAddCategory] = useState('');
@@ -8,7 +9,7 @@ const AddCategory = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/taskmanagement/task/addCategory', {addCategory, catDescription});
+            const response = await axiosInstance.post('/task/addCategory', {addCategory, catDescription});
             const addCatData = response.data;
             console.log(addCatData);
         } catch (error) {
