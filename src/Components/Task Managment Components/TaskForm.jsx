@@ -17,7 +17,7 @@ const TaskForm = ({ task, onSave }) => {
             const response = await axiosInstance.get('/task/getCategories');
             const responseData = response.data;
            
-            if (Array.isArray(responseData)) {
+            if (responseData && typeof responseData === 'object' && Array.isArray(responseData.categories)) {
                 const categoryData = response.data.categories;
                 console.log(categoryData);
                 setCategories(categoryData);
