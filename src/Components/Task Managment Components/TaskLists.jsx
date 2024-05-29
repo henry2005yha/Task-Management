@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TaskItems from './TaskItems';
-import axios from 'axios';
+import axiosInstance from '../AxiosHelper';
 
 const TaskLists = () => {
     const [tasks, setTasks] = useState([]);
@@ -8,7 +8,7 @@ const TaskLists = () => {
     useEffect(() => {
       const fetchTasks = async () => {
         try {
-          const response = await axios.get('/task/get');
+          const response = await axiosInstance.get('/task/get');
           setTasks(response.data);
         } catch (error) {
           console.error('Error fetching tasks', error);
