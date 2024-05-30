@@ -1,18 +1,18 @@
-import axios from 'axios';
+import axiosInstance from '../AxiosHelper';
 import React from 'react'
 
 const TaskItems = ({task}) => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(``);
+            await axiosInstance.delete(`/task/delete?taskId=${task.id}`);
         } catch (error) {
             console.error('Error in Deleting Tasks', error);
         }
     };
     const handleComplete = async () => {
         try {
-            await axios.put(``, {...task, status: 'completed'});
+            await axiosInstance.put(`/task/complete?taskId${task.id}`, {...task, status: 'completed'});
         } catch (error) {
             console.error('Error in updating Tasks', error);
         }

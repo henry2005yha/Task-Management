@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../AxiosHelper';
 import AddCategory from './AddCategory'; // Ensure the correct import path
 import './taskform.css';
-
-const TaskForm = ({ task, onSave }) => {
+ 
+const TaskForm = ({ task, onSave, onAddCategoryClick }) => {
     const [title, setTitle] = useState(task ? task.title : '');
     const [description, setDescription] = useState(task ? task.description : '');
     const [status, setStatus] = useState(task ? task.status : 'pending');
@@ -11,14 +11,15 @@ const TaskForm = ({ task, onSave }) => {
     const [category, setCategory] = useState(task ? task.category : '');
     const [categories, setCategories] = useState([]);
     const [showAddCategory, setShowAddCategory] = useState(false);
-
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
+ 
     const fetchCategories = async () => {
         try {
             const response = await axiosInstance.get('/task/getCategories');
             const responseData = response.data;
-           
             if (responseData && typeof responseData === 'object' && Array.isArray(responseData.categories)) {
-                const categoryData = response.data.categories;
+                const categoryData = responseData.categories;
                 console.log(categoryData);
                 setCategories(categoryData);
             } else {
@@ -28,26 +29,39 @@ const TaskForm = ({ task, onSave }) => {
             console.error('Category Error', error);
         }
     };
-
+ 
     useEffect(() => {
         fetchCategories();
     }, []);
-
+ 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const taskData = { title, description, status, deadline };
         try {
+            let response;
             if (task) {
-                await axiosInstance.put(`/task/update/${task.id}`, taskData);
+                response = await axiosInstance.put(`/task/update/${task.id}`, taskData);
             } else {
-                await axiosInstance.post(`/task/create?category=${category}`, taskData);
+                response = await axiosInstance.post(`/task/create?category=${category}`, taskData);
             }
-            onSave();
+            const responseData = response.data;
+            if (responseData.status) {
+                setMessage(responseData.message);
+                setError('');
+                if (onSave) {
+                    onSave();  // Ensure onSave is defined before calling it
+                }
+            } else {
+                setMessage('');
+                setError('Failed to save the task. Please try again.');
+            }
         } catch (error) {
             console.error('Error Saving Task!', error);
+            setMessage('');
+            setError('An error occurred while saving the task. Please try again.');
         }
     };
-
+ 
     const handleCategoryChange = (e) => {
         const selectedCategory = e.target.value;
         if (selectedCategory === "add-category") {
@@ -56,12 +70,12 @@ const TaskForm = ({ task, onSave }) => {
             setCategory(selectedCategory);
         }
     };
-
+ 
     const handleCategoryAdded = () => {
         setShowAddCategory(false);
         fetchCategories(); // Refetch categories after a new one has been added
     };
-
+ 
     return (
         <div className='task-form-container'>
             {showAddCategory ? (
@@ -69,6 +83,8 @@ const TaskForm = ({ task, onSave }) => {
             ) : (
                 <form onSubmit={handleSubmit} className="task-form">
                     <h2>Create Tasks</h2>
+                    {message && <p className="success-message">{message}</p>}
+                    {error && <p className="error-message">{error}</p>}
                     <input
                         type="text"
                         value={title}
@@ -111,5 +127,5 @@ const TaskForm = ({ task, onSave }) => {
         </div>
     );
 };
-
+ 
 export default TaskForm;
