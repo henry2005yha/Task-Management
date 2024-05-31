@@ -1,12 +1,13 @@
 import axiosInstance from '../AxiosHelper';
 import React, { useState } from 'react';
 
-const TaskItems = ({ task }) => {
+const TaskItems = ({ task, onUpdate }) => {
   const [taskStatus, setTaskStatus] = useState(task.status);
 
   const handleDelete = async () => {
     try {
       await axiosInstance.delete(`/task/delete?taskId=${task.taskId}`);
+      onUpdate(); // Notify the parent component to update the state
     } catch (error) {
       console.error('Error in Deleting Tasks', error);
     }
@@ -16,6 +17,7 @@ const TaskItems = ({ task }) => {
     try {
       await axiosInstance.put(`/task/complete?taskId=${task.taskId}`, { ...task, status: 'complete' });
       setTaskStatus('complete');
+      onUpdate(); // Notify the parent component to update the state
     } catch (error) {
       console.error('Error in updating Tasks', error);
     }
