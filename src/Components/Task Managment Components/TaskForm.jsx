@@ -36,13 +36,13 @@ const TaskForm = ({ task, onSave, onAddCategoryClick }) => {
  
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const taskData = { title, description, status, deadline };
+        const taskData = { title, description, status, deadline,category };
         try {
             let response;
             if (task) {
                 response = await axiosInstance.put(`/task/update/${task.id}`, taskData);
             } else {
-                response = await axiosInstance.post(`/task/create?category=${category}`, taskData);
+                response = await axiosInstance.post('/task/create?category', taskData);
             }
             const responseData = response.data;
             if (responseData.status) {

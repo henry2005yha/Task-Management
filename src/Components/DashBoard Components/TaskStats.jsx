@@ -9,9 +9,7 @@ const TaskStats = () => {
     const fetchStats = async () => {
       try {
         const response = await axiosInstance.get('/task/get'); // Adjust endpoint if necessary
-        const { completed, pending } = response.data.tasks.status; // Adjust according to your API structure
-        const total = completed + pending;
-        setStats({ total, completed, pending });
+        setStats(response.data);
       } catch (error) {
         console.error('Error fetching stats!', error);
       }
