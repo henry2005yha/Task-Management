@@ -53,13 +53,13 @@ const TaskLists = () => {
         <div className="task-list-container">
             <TaskStats tasks={filteredTasks} />
             <select value={selectedCategory} onChange={handleCategoryChange}>
-            <option value="view-all">View All Tasks</option>
+                <option value="">Select Category</option>
                 {categories.map(category => (
                     <option key={category.id} value={category.name}>
                         {category.name}
                     </option>
                 ))}
-               
+                <option value="view-all">View All Tasks</option>
             </select>
             {selectedCategory ? (
                 filteredTasks.length > 0 ? (
