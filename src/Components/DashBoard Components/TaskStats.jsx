@@ -13,6 +13,9 @@ const TaskStats = ({ tasks = [] }) => {
 
     const COLORS = ['#00C49F', '#FFBB28', '#FF8042']; // Adding another color for the third circle
 
+    const completedPercentage = totalTasks === 0 ? 0 : (completedTasks / totalTasks) * 100;
+    const pendingPercentage = totalTasks === 0 ? 0 : (pendingTasks / totalTasks) * 100;
+ 
     return (
         <div>
             <h2>Task Statistics</h2>
@@ -42,13 +45,58 @@ const TaskStats = ({ tasks = [] }) => {
                         ))}
                     </Pie>
                     <Tooltip />
-                    <Legend />
                 </PieChart>
                 
             ) 
+            
             : (
                 <p>No tasks to display statistics</p>
             )}
+             <div style={{ marginBottom: '20px', width: '500px' }}>
+                <strong>Total Tasks: {totalTasks}</strong>
+                <div style={{ background: '#e0e0e0', borderRadius: '5px', overflow: 'hidden' }}>
+                    <div style={{
+                        width: '100%',
+                        background: '#8884d8',
+                        height: '20px',
+                        textAlign: 'center',
+                        color: '#fff',
+                        borderRadius: '5px'
+                    }}>
+                        100%
+                    </div>
+                </div>
+            </div>
+            <div style={{ marginBottom: '20px', width: '500px' }}>
+                <strong>Completed Tasks: {completedTasks} ({completedPercentage.toFixed(2)}%)</strong>
+                <div style={{ background: '#e0e0e0', borderRadius: '5px', overflow: 'hidden' }}>
+                    <div style={{
+                        width: `${completedPercentage}%`,
+                        background: '#00C49F',
+                        height: '20px',
+                        textAlign: 'center',
+                        color: '#fff',
+                        borderRadius: '5px'
+                    }}>
+                        {completedPercentage.toFixed(2)}%
+                    </div>
+                </div>
+            </div>
+            <div style={{ width: '500px' }}>
+                <strong>Pending Tasks: {pendingTasks} ({pendingPercentage.toFixed(2)}%)</strong>
+                <div style={{ background: '#e0e0e0', borderRadius: '5px', overflow: 'hidden' }}>
+                    <div style={{
+                        width: `${pendingPercentage}%`,
+                        background: '#FFBB28',
+                        height: '20px',
+                        textAlign: 'center',
+                        color: '#fff',
+                        borderRadius: '5px'
+                    }}>
+                        {pendingPercentage.toFixed(2)}%
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

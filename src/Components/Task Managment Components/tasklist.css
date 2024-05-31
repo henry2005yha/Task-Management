@@ -26,7 +26,7 @@
     padding: 0;
   }
    
-  .task-list-container li {
+  .task-list-container .item{
     background-color: #f9f9f9;
     padding: 10px;
     border-radius: 5px;

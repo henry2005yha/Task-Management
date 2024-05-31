@@ -22,7 +22,7 @@ const TaskItems = ({ task }) => {
   };
 
   return (
-    <li>
+    <div className='item'>
       <h3>{task.title}</h3>
       <p>{task.description}</p>
       <p>Status: {taskStatus}</p>
@@ -30,7 +30,7 @@ const TaskItems = ({ task }) => {
         {taskStatus === 'complete' ? 'Completed' : 'Mark as Complete'}
       </button>
       <button onClick={handleDelete}>Delete</button>
-    </li>
+    </div>
   );
 };
 
