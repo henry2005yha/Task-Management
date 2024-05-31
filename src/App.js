@@ -5,10 +5,10 @@ import Register from './Components/Authentication Components/Register';
 import TaskForm from './Components/Task Managment Components/TaskForm';
 import TaskLists from './Components/Task Managment Components/TaskLists';
 import DashBoard from './Components/DashBoard Components/DashBoard';
-
+ 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
      {/* <Login/>
      <Register/> */}
      {/* <TaskForm/> */}
@@ -17,5 +17,5 @@ function App() {
     </div>
   );
 }
-
+ 
 export default App;
