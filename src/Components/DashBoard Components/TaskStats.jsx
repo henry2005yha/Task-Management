@@ -2,20 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import axiosInstance from '../AxiosHelper';
 
-const TaskStats = () => {
+const TaskStats = ({ tasks }) => {
   const [stats, setStats] = useState({ total: 0, completed: 0, pending: 0 });
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const response = await axiosInstance.get('/task/get'); // Adjust endpoint if necessary
-        setStats(response.data);
-      } catch (error) {
-        console.error('Error fetching stats!', error);
-      }
+    const calculateStats = () => {
+      const completed = tasks.filter(task => task.status === 'complete').length;
+      const pending = tasks.filter(task => task.status === 'pending').length;
+      const total = tasks.length;
+      setStats({ total, completed, pending });
     };
-    fetchStats();
-  }, []);
+    calculateStats();
+  }, [tasks]);
 
   const data = [
     { name: 'Completed Tasks', value: stats.completed },
