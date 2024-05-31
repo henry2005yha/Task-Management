@@ -1,11 +1,12 @@
 import React from 'react';
-import TaskLists from './TaskLists';
+import TaskLists from '../Task Managment Components/TaskLists';
+
 
 const DashBoard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      <TaskLists />
+      <TaskLists/>
     </div>
   );
 };

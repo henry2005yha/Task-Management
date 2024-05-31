@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../AxiosHelper';
 import TaskItems from './TaskItems';
-import TaskStats from './TaskStats';
+import TaskStats from '../DashBoard Components/TaskStats';
+
+
 
 const TaskLists = () => {
   const [tasks, setTasks] = useState([]);
@@ -56,10 +58,10 @@ const TaskLists = () => {
       </select>
       <ul>
         {filteredTasks.map(task => (
-          <TaskItems key={task.taskId} task={task} />
+          <TaskItems key={task.taskId} task={task}/>
         ))}
       </ul>
-      <TaskStats tasks={filteredTasks} />
+      <TaskStats tasks={filteredTasks}/>
     </div>
   );
 };
