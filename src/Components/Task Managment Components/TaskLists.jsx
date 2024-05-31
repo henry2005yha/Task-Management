@@ -50,7 +50,8 @@ const TaskLists = () => {
     };
     return (
         <div className="task-list-container">
-            <h2>Task Lists</h2>
+         
+            <TaskStats tasks={filteredTasks} />
             <select value={selectedCategory} onChange={handleCategoryChange}>
                 <option value="">Select Category</option>
                 {categories.map(category => (
@@ -73,10 +74,9 @@ const TaskLists = () => {
             ) : (
                 <p>Please select a category to view tasks</p>
             )}
-            <TaskStats tasks={filteredTasks} />
+           
         </div>
     );
 };
  
 export default TaskLists;
- 
