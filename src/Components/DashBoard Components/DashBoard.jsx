@@ -1,14 +1,15 @@
-import React from 'react';
-import TaskLists from '../Task Managment Components/TaskLists';
-
+import React from 'react'
+import TaskStats from './TaskStats'
+import TaskLists from '../Task Managment Components/TaskLists'
 
 const DashBoard = () => {
   return (
     <div>
-      <h1>Dashboard</h1>
-      <TaskLists/>
+      <h1>DashBoard</h1>
+     
+      <TaskLists />
     </div>
-  );
-};
+  )
+}
 
-export default DashBoard;
+export default DashBoard

@@ -1,0 +1,42 @@
+.task-lists-container {
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 800px;
+  }
+  
+  .task-lists-heading {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .task-lists-select {
+    margin-bottom: 20px;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .task-lists-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .task-lists-table th, .task-lists-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .task-lists-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .task-lists-empty {
+    font-style: italic;
+    color: #777;
+  }
+  

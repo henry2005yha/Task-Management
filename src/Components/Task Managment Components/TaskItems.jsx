@@ -26,7 +26,6 @@ const TaskItems = ({ task }) => {
       <h3>{task.title}</h3>
       <p>{task.description}</p>
       <p>Status: {taskStatus}</p>
-      <p>Category: {task.category}</p>
       <button onClick={handleComplete} disabled={taskStatus === 'complete'}>
         {taskStatus === 'complete' ? 'Completed' : 'Mark as Complete'}
       </button>
