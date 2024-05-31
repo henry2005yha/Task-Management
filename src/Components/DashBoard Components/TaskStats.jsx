@@ -11,7 +11,7 @@ const TaskStats = ({ tasks = [] }) => {
         { name: 'Pending Tasks', value: pendingTasks },
     ];
 
-    const COLORS = ['#00C49F', '#FFBB28'];
+    const COLORS = ['#00C49F', '#FFBB28', '#FF8042']; // Adding another color for the third circle
 
     return (
         <div>
@@ -44,7 +44,9 @@ const TaskStats = ({ tasks = [] }) => {
                     <Tooltip />
                     <Legend />
                 </PieChart>
-            ) : (
+                
+            ) 
+            : (
                 <p>No tasks to display statistics</p>
             )}
         </div>
