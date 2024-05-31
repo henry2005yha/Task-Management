@@ -17,6 +17,9 @@ const Register = () => {
             console.error('Registartion Error, Try Agsin!', error);
         }
     }
+    const handleLoginClick = () => {
+      window.location.href = '/login'; // Redirect to registration page
+    };
   return (
     <div className='register-container'>
       <form onSubmit={handleSubmit} className='register-form'>
@@ -24,6 +27,7 @@ const Register = () => {
         <input type="text" value={username} onChange={(e) =>setUsername(e.target.value)} placeholder='Enter Username' required className="register-input"/>
         <input type="email" value={email} onChange={(e) =>setEmail(e.target.value)} placeholder='Enter Email' required className="register-input"/>
         <input type="password" value={password} onChange={(e) =>setPassword(e.target.value)} placeholder='Enter Password' required className="register-input"/>
+        <p onClick={handleLoginClick} className='register-link'>Login</p>
         <button type='submit' className="register-button">Register</button>
       </form>
     </div>

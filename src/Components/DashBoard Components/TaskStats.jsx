@@ -1,30 +1,27 @@
-
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
- 
+
 const TaskStats = ({ tasks = [] }) => {
     const totalTasks = tasks.length;
     const completedTasks = tasks.filter(task => task.status === 'complete').length;
     const pendingTasks = totalTasks - completedTasks;
- 
+
     const data = [
         { name: 'Completed Tasks', value: completedTasks },
         { name: 'Pending Tasks', value: pendingTasks },
     ];
- 
-    const COLORS = ['#00C49F', '#FFBB28']; // Colors for the circular chart
- 
+
+    const COLORS = ['#00C49F', '#FFBB28'];
+
     const completedPercentage = totalTasks === 0 ? 0 : (completedTasks / totalTasks) * 100;
     const pendingPercentage = totalTasks === 0 ? 0 : (pendingTasks / totalTasks) * 100;
- 
+
     return (
         <div>
-           
             {totalTasks > 0 ? (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', alignItems: 'center', }}>
-                    <div style={{ marginBottom: '20px', marginTop: '20px'  }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', alignItems: 'center' }}>
+                    <div style={{ marginBottom: '20px', marginTop: '20px' }}>
                         <PieChart width={300} height={300}>
-                           
                             <Pie
                                 data={data}
                                 cx="50%"
@@ -42,12 +39,10 @@ const TaskStats = ({ tasks = [] }) => {
                             </Pie>
                             <Tooltip />
                         </PieChart>
-                       
                     </div>
                     <div>
                         <div style={{ marginBottom: '30px', fontSize: '24px' }}>
                             <strong>Total Tasks: {totalTasks}</strong>
-                         
                         </div>
                         <div style={{ marginBottom: '20px' }}>
                             <strong>Completed Tasks: {completedTasks} ({completedPercentage.toFixed(2)}%)</strong>
@@ -87,6 +82,5 @@ const TaskStats = ({ tasks = [] }) => {
         </div>
     );
 };
- 
+
 export default TaskStats;
- 

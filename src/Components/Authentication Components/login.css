@@ -49,4 +49,9 @@ body {
     border-color: #007bff;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
   }
-  
+  .register-link {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+    margin-bottom: 10px;
+  }
