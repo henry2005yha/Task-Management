@@ -11,16 +11,17 @@ const Navigation = () => {
   const email = localStorage.getItem('email');
   return (
     email && (
-      <nav>
+      <nav className="navigation">
         <ul>
-          <li><Link to="/login">Login</Link></li>
-          <li><Link to="/register">Register</Link></li>
+          {/* <li><Link to="/login">Login</Link></li>
+          <li><Link to="/register">Register</Link></li> */}
           <li><Link to="/task-form">Task Form</Link></li>
           <li><Link to="/task-lists">Task Lists</Link></li>
           <li><Link to="/dashboard">Dashboard</Link></li>
         </ul>
       </nav>
     )
+    
   );
 };
 

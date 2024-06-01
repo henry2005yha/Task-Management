@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axiosInstance from '../AxiosHelper';
+import './add.css';  // Import the CSS file
 
 const AddCategory = ({ onCategoryAdded }) => {
     const [addCategory, setAddCategory] = useState('');
@@ -17,22 +18,25 @@ const AddCategory = ({ onCategoryAdded }) => {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div className="add-category-container">
+            <h1>Add Category</h1>
+            <form className="add-category-form" onSubmit={handleSubmit}>
                 <input
                     type="text"
+                    className="add-category-input"
                     value={addCategory}
                     onChange={(e) => setAddCategory(e.target.value)}
                     placeholder='Enter Category'
                     required
                 />
                 <textarea
+                    className="add-category-textarea"
                     value={catDescription}
                     onChange={(e) => setCatDescription(e.target.value)}
                     placeholder='Enter Description'
                     required
                 ></textarea>
-                <button type="submit">Add Category</button>
+                <button type="submit" className="add-category-button">Add Category</button>
             </form>
         </div>
     );

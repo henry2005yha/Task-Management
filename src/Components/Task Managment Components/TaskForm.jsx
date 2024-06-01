@@ -75,7 +75,9 @@ const TaskForm = ({ task, onSave, onAddCategoryClick }) => {
         setShowAddCategory(false);
         fetchCategories(); // Refetch categories after a new one has been added
     };
- 
+    const sendToDashboard = () =>{
+        window.location.href = 'dashboard';
+    }
     return (
         <div className='task-form-container'>
             {showAddCategory ? (
@@ -121,7 +123,7 @@ const TaskForm = ({ task, onSave, onAddCategoryClick }) => {
                         ))}
                         <option value="add-category">Add Categories</option>
                     </select>
-                    <button type="submit" className='task-button'>Save Task</button>
+                    <button type="submit" className='task-button' onClick={sendToDashboard}>Save Task</button>
                 </form>
             )}
         </div>
