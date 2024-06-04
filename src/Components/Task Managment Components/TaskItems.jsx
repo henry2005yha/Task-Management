@@ -1,8 +1,11 @@
-import axiosInstance from '../AxiosHelper';
 import React, { useState } from 'react';
+import axiosInstance from '../AxiosHelper';
+import { useNavigate } from 'react-router-dom';
+import './taskItem.css'; // Ensure you have the appropriate styles
 
 const TaskItems = ({ task, onUpdate }) => {
   const [taskStatus, setTaskStatus] = useState(task.status);
+  const navigate = useNavigate();
 
   const handleDelete = async () => {
     try {
@@ -23,6 +26,10 @@ const TaskItems = ({ task, onUpdate }) => {
     }
   };
 
+  const handleEdit = () => {
+    navigate(`/task-form/${task.taskId}`);
+  };
+
   return (
     <div className='item'>
       <h3>{task.title}</h3>
@@ -31,6 +38,7 @@ const TaskItems = ({ task, onUpdate }) => {
       <button onClick={handleComplete} disabled={taskStatus === 'complete'}>
         {taskStatus === 'complete' ? 'Completed' : 'Mark as Complete'}
       </button>
+      <button onClick={handleEdit}>Edit</button>
       <button onClick={handleDelete}>Delete</button>
     </div>
   );

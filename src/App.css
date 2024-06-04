@@ -47,31 +47,31 @@ body {
 }
 
 /* Navigation styles */
-.navigation {
+nav {
   background-color: #333;
-  padding: 10px;
+  padding: 1em;
 }
 
-.navigation ul {
-  list-style-type: none;
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
 }
 
-.navigation li {
-  margin: 0 15px;
+nav ul li {
+  display: inline;
 }
 
-.navigation a {
+nav ul li a {
   color: white;
   text-decoration: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+  padding: 0.5em 1em;
+  display: inline-block;
 }
 
-.navigation a:hover {
+nav ul li a:hover {
   background-color: #575757;
 }
+

@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import Login from './Components/Authentication Components/Login';
 import Register from './Components/Authentication Components/Register';
@@ -8,30 +8,26 @@ import TaskLists from './Components/Task Managment Components/TaskLists';
 import DashBoard from './Components/DashBoard Components/DashBoard';
 
 const Navigation = () => {
-  const email = localStorage.getItem('email');
+  const isLoggedIn = Boolean(localStorage.getItem('email'));
+
+  if (!isLoggedIn) {
+    return null;
+  }
+
   return (
-    email && (
-      <nav className="navigation">
-        <ul>
-          {/* <li><Link to="/login">Login</Link></li>
-          <li><Link to="/register">Register</Link></li> */}
-          <li><Link to="/task-form">Task Form</Link></li>
-          <li><Link to="/task-lists">Task Lists</Link></li>
-          <li><Link to="/dashboard">Dashboard</Link></li>
-        </ul>
-      </nav>
-    )
-    
+    <nav>
+      <ul>
+        <li><Link to="/dashboard">Dashboard</Link></li>
+        <li><Link to="/task-form">Task Form</Link></li>
+        <li><Link to="/task-lists">Task Lists</Link></li>
+      </ul>
+    </nav>
   );
 };
 
-// PrivateRoute Component
-const PrivateRoute = ({ children }) => {
-  const email = localStorage.getItem('email');
-  return email ? children : <Navigate to="/login" />;
-};
-
 function App() {
+  const isLoggedIn = Boolean(localStorage.getItem('email'));
+
   return (
     <div className='App'>
       <Router>
@@ -39,26 +35,11 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/task-form" element={
-            <PrivateRoute>
-              <TaskForm />
-            </PrivateRoute>
-          } />
-          <Route path="/task-lists" element={
-            <PrivateRoute>
-              <TaskLists />
-            </PrivateRoute>
-          } />
-          <Route path="/dashboard" element={
-            <PrivateRoute>
-              <DashBoard />
-            </PrivateRoute>
-          } />
-          <Route path="/" element={
-            <PrivateRoute>
-              <DashBoard />
-            </PrivateRoute>
-          } /> {/* Default route */}
+          <Route path="/task-form/:taskId" element={<TaskForm />} />
+          <Route path="/task-form" element={<TaskForm />} />
+          <Route path="/task-lists" element={<TaskLists />} />
+          <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
         </Routes>
       </Router>
     </div>

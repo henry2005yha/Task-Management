@@ -2,26 +2,60 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../AxiosHelper';
 import AddCategory from './AddCategory'; // Ensure the correct import path
 import './taskform.css';
- 
-const TaskForm = ({ task, onSave, onAddCategoryClick }) => {
-    const [title, setTitle] = useState(task ? task.title : '');
-    const [description, setDescription] = useState(task ? task.description : '');
-    const [status, setStatus] = useState(task ? task.status : 'pending');
-    const [deadline, setDeadline] = useState(task ? task.deadline : '');
-    const [category, setCategory] = useState(task ? task.category : '');
+import { useParams, useNavigate } from 'react-router-dom';
+
+const TaskForm = ({ onSave, onAddCategoryClick }) => {
+    const { taskId } = useParams();
+    const navigate = useNavigate();
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [status, setStatus] = useState('pending');
+    const [deadline, setDeadline] = useState('');
+    const [category, setCategory] = useState('');
     const [categories, setCategories] = useState([]);
     const [showAddCategory, setShowAddCategory] = useState(false);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
- 
+
+    useEffect(() => {
+        const fetchTask = async () => {
+            if (taskId) {
+                try {
+                    console.log(`Fetching task with ID: ${taskId}`);
+                    const response = await axiosInstance.get(`/task/getById?taskId=${taskId}`);
+                    console.log('API Response:', response.data);
+    
+                    // Access the task data from response.data.tasks[0]
+                    const taskData = response.data.tasks[0] || {};
+    
+                    console.log('Fetched task data:', taskData);
+    
+                    setTitle(taskData.title ?? '');
+                    setDescription(taskData.description ?? '');
+                    setStatus(taskData.status ?? 'pending');
+                    setDeadline(taskData.deadline ? taskData.deadline.substring(0, 16) : '');
+                    setCategory(taskData.category ?? '');
+    
+                    console.log('Title:', taskData.title);
+                    console.log('Description:', taskData.description);
+                    console.log('Status:', taskData.status);
+                    console.log('Deadline:', taskData.deadline);
+                    console.log('Category:', taskData.category);
+                } catch (error) {
+                    console.error('Error fetching task', error);
+                }
+            }
+        };
+        fetchTask();
+    }, [taskId]);
+    
+
     const fetchCategories = async () => {
         try {
             const response = await axiosInstance.get('/task/getCategories');
             const responseData = response.data;
-            if (responseData && typeof responseData === 'object' && Array.isArray(responseData.categories)) {
-                const categoryData = responseData.categories;
-                console.log(categoryData);
-                setCategories(categoryData);
+            if (responseData && Array.isArray(responseData.categories)) {
+                setCategories(responseData.categories);
             } else {
                 console.error('API is not responding correctly', responseData);
             }
@@ -29,20 +63,20 @@ const TaskForm = ({ task, onSave, onAddCategoryClick }) => {
             console.error('Category Error', error);
         }
     };
- 
+
     useEffect(() => {
         fetchCategories();
     }, []);
- 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const taskData = { title, description, status, deadline,category };
+        const taskData = { title, description, status, deadline, category };
         try {
             let response;
-            if (task) {
-                response = await axiosInstance.put(`/task/update/${task.id}`, taskData);
+            if (taskId) {
+                response = await axiosInstance.put(`/task/update/${taskId}`, taskData);
             } else {
-                response = await axiosInstance.post('/task/create?category', taskData);
+                response = await axiosInstance.post('/task/create', taskData);
             }
             const responseData = response.data;
             if (responseData.status) {
@@ -51,6 +85,7 @@ const TaskForm = ({ task, onSave, onAddCategoryClick }) => {
                 if (onSave) {
                     onSave();  // Ensure onSave is defined before calling it
                 }
+                navigate('/dashboard');
             } else {
                 setMessage('');
                 setError('Failed to save the task. Please try again.');
@@ -61,7 +96,7 @@ const TaskForm = ({ task, onSave, onAddCategoryClick }) => {
             setError('An error occurred while saving the task. Please try again.');
         }
     };
- 
+
     const handleCategoryChange = (e) => {
         const selectedCategory = e.target.value;
         if (selectedCategory === "add-category") {
@@ -70,21 +105,19 @@ const TaskForm = ({ task, onSave, onAddCategoryClick }) => {
             setCategory(selectedCategory);
         }
     };
- 
+
     const handleCategoryAdded = () => {
         setShowAddCategory(false);
         fetchCategories(); // Refetch categories after a new one has been added
     };
-    const sendToDashboard = () =>{
-        window.location.href = 'dashboard';
-    }
+
     return (
         <div className='task-form-container'>
             {showAddCategory ? (
                 <AddCategory onCategoryAdded={handleCategoryAdded} />
             ) : (
                 <form onSubmit={handleSubmit} className="task-form">
-                    <h2>Create Tasks</h2>
+                    <h2>{taskId ? 'Edit Task' : 'Create Task'}</h2>
                     {message && <p className="success-message">{message}</p>}
                     {error && <p className="error-message">{error}</p>}
                     <input
@@ -123,11 +156,11 @@ const TaskForm = ({ task, onSave, onAddCategoryClick }) => {
                         ))}
                         <option value="add-category">Add Categories</option>
                     </select>
-                    <button type="submit" className='task-button' onClick={sendToDashboard}>Save Task</button>
+                    <button type="submit" className='task-button'>Save Task</button>
                 </form>
             )}
         </div>
     );
 };
- 
+
 export default TaskForm;

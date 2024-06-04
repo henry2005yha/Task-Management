@@ -7,7 +7,7 @@ import './tasklist.css';
 const TaskLists = () => {
     const [tasks, setTasks] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('view-all');
     const [filteredTasks, setFilteredTasks] = useState([]);
  
     const fetchTasks = async () => {
@@ -53,13 +53,13 @@ const TaskLists = () => {
         <div className="task-list-container">
             <TaskStats tasks={filteredTasks} />
             <select value={selectedCategory} onChange={handleCategoryChange}>
-                <option value="">Select Category</option>
+                <option value="view-all">View All Tasks</option>
                 {categories.map(category => (
                     <option key={category.id} value={category.name}>
                         {category.name}
                     </option>
                 ))}
-                <option value="view-all">View All Tasks</option>
+                
             </select>
             {selectedCategory ? (
                 filteredTasks.length > 0 ? (
