@@ -69,9 +69,12 @@ nav ul li a {
   text-decoration: none;
   padding: 0.5em 1em;
   display: inline-block;
+  cursor: pointer;
 }
 
 nav ul li a:hover {
   background-color: #575757;
 }
-
+.out{
+  color: white;
+}

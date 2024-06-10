@@ -1,5 +1,4 @@
 import React from 'react'
-import TaskStats from './TaskStats'
 import TaskLists from '../Task Managment Components/TaskLists'
 
 const DashBoard = () => {

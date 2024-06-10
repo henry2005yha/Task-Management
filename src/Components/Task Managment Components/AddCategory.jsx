@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axiosInstance from '../AxiosHelper';
-import './add.css';  // Import the CSS file
+import './add.css'; // Import the CSS file
+import swal from 'sweetalert';
 
 const AddCategory = ({ onCategoryAdded }) => {
     const [addCategory, setAddCategory] = useState('');
@@ -12,6 +13,7 @@ const AddCategory = ({ onCategoryAdded }) => {
             const response = await axiosInstance.post('/task/addCategory', { name: addCategory, description: catDescription });
             console.log(response.data);
             onCategoryAdded(); // Callback to switch back to TaskForm
+            swal("Success!", "You have added a category.", "success");
         } catch (error) {
             console.error('Add Category Error, Try Again!', error);
         }

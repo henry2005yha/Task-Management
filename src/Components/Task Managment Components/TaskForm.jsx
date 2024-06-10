@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../AxiosHelper';
-import AddCategory from './AddCategory'; // Ensure the correct import path
+import AddCategory from './AddCategory';
 import './taskform.css';
 import { useParams, useNavigate } from 'react-router-dom';
+import swal from 'sweetalert';
 
 const TaskForm = ({ onSave, onAddCategoryClick }) => {
     const { taskId } = useParams();
@@ -75,8 +76,10 @@ const TaskForm = ({ onSave, onAddCategoryClick }) => {
             let response;
             if (taskId) {
                 response = await axiosInstance.put(`/task/edit?taskId=${taskId}`, taskData);
+                swal("Success!", "You have updated your task.", "success");
             } else {
                 response = await axiosInstance.post('/task/create', taskData);
+                swal("Success!", "You have added a task.", "success");
             }
             const responseData = response.data;
             if (responseData.status) {
@@ -110,6 +113,12 @@ const TaskForm = ({ onSave, onAddCategoryClick }) => {
         setShowAddCategory(false);
         fetchCategories(); // Refetch categories after a new one has been added
     };
+
+    useEffect(() => {
+        if (error) {
+            swal("Error!", error, "error");
+        }
+    }, [error]);
 
     return (
         <div className='task-form-container'>

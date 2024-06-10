@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import Login from './Components/Authentication Components/Login';
@@ -9,6 +9,12 @@ import DashBoard from './Components/DashBoard Components/DashBoard';
 
 const Navigation = () => {
   const isLoggedIn = Boolean(localStorage.getItem('email'));
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('email');
+    navigate('/login');
+  };
 
   if (!isLoggedIn) {
     return null;
@@ -19,7 +25,7 @@ const Navigation = () => {
       <ul>
         <li><Link to="/dashboard">Dashboard</Link></li>
         <li><Link to="/task-form">Task Form</Link></li>
-        <li><Link to="/task-lists">Task Lists</Link></li>
+        <li onClick={handleLogout} className='out'><Link>LogOut</Link></li>
       </ul>
     </nav>
   );
