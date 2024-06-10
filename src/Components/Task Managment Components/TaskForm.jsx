@@ -75,8 +75,7 @@ const TaskForm = ({ onSave, onAddCategoryClick }) => {
         try {
             let response;
             if (taskId) {
-                response = await axiosInstance.put(`/task/edit?taskId=${taskId}`, taskData);
-                swal("Success!", "You have updated your task.", "success");
+                response = await axiosInstance.put(`/task/update/${taskId}`, taskData);
             } else {
                 response = await axiosInstance.post('/task/create', taskData);
                 swal("Success!", "You have added a task.", "success");
